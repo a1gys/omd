@@ -1,18 +1,22 @@
-from typing import Dict, List, Iterable
+from typing import Dict, List, Iterable, Optional
 
 
 class CountVectorizer:
     """
-    Transforms given sequence (text) into numerical vector
-    vector represents the number of occurence of a word in
-    the given sequence
-    fit_transform and transform functions return
-    vector, where elements in alphabetical order
+    Transforms given sequence (text) into numerical vector.
+    Vector represents the number of occurences of a word in
+    the given sequence.
+    fit_transform and transform functions return vector,
+    where elements preserve initial order
     """
     chars = ".,!?:"
 
-    def __init__(self, lowercase: bool = True):
+    def __init__(self,
+                 lowercase: bool = True,
+                 updated_chars: Optional[str] = None):
         self.lowercase = lowercase
+        if updated_chars:
+            self.chars += updated_chars
         self._vocabulary = None
 
     def fit_transform(self, texts: Iterable) -> List[List[int]]:
@@ -22,9 +26,9 @@ class CountVectorizer:
                 text = text.replace(char, "")
             if self.lowercase:
                 text = text.lower()
-
-            words.extend(text.split())
-        words = sorted(set(words))
+            for word in text.split():
+                if word not in words:
+                    words.append(word)
 
         self._vocabulary = {word: index for index, word in enumerate(words)}
 
@@ -35,8 +39,7 @@ class CountVectorizer:
             if self.lowercase:
                 text = text.lower()
             for word in text.split():
-                ind = words.index(word)
-                vector[i][ind] += 1
+                vector[i][self._vocabulary[word]] += 1
         return vector
 
     def fit(self, texts: Iterable):
@@ -46,9 +49,9 @@ class CountVectorizer:
                 text = text.replace(char, "")
             if self.lowercase:
                 text = text.lower()
-
-            words.extend(text.split())
-        words = sorted(set(words))
+            for word in text.split():
+                if word not in words:
+                    words.append(word)
 
         self._vocabulary = {word: index for index, word in enumerate(words)}
 
@@ -63,9 +66,8 @@ class CountVectorizer:
                 text = text.lower()
             for word in text.split():
                 try:
-                    ind = words.index(word)
-                    vector[i][ind] += 1
-                except ValueError:
+                    vector[i][self._vocabulary[word]] += 1
+                except KeyError:
                     continue
         return vector
 
