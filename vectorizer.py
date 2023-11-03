@@ -23,7 +23,6 @@ class CountVectorizer:
     def fit_transform(self, texts: Iterable) -> List[List[int]]:
         words = self._get_words(texts)
         self._vocabulary = {word: index for index, word in enumerate(words)}
-        print(words)
         vector = [[0]*len(words) for _ in range(len(texts))]
         for i, text in enumerate(texts):
             for char in self.chars:
