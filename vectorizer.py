@@ -1,4 +1,5 @@
 from typing import Dict, List, Iterable, Optional
+from itertools import chain
 
 
 class CountVectorizer:
@@ -20,18 +21,9 @@ class CountVectorizer:
         self._vocabulary = None
 
     def fit_transform(self, texts: Iterable) -> List[List[int]]:
-        words = []
-        for text in texts:
-            for char in self.chars:
-                text = text.replace(char, "")
-            if self.lowercase:
-                text = text.lower()
-            for word in text.split():
-                if word not in words:
-                    words.append(word)
-
+        words = self._get_words(texts)
         self._vocabulary = {word: index for index, word in enumerate(words)}
-
+        print(words)
         vector = [[0]*len(words) for _ in range(len(texts))]
         for i, text in enumerate(texts):
             for char in self.chars:
@@ -43,16 +35,7 @@ class CountVectorizer:
         return vector
 
     def fit(self, texts: Iterable):
-        words = []
-        for text in texts:
-            for char in self.chars:
-                text = text.replace(char, "")
-            if self.lowercase:
-                text = text.lower()
-            for word in text.split():
-                if word not in words:
-                    words.append(word)
-
+        words = self._get_words(texts)
         self._vocabulary = {word: index for index, word in enumerate(words)}
 
     def transform(self, texts: List[str]) -> List[str]:
@@ -76,6 +59,20 @@ class CountVectorizer:
             raise ValueError("Vocabulary is not fitted")
         return list(self._vocabulary.keys())
 
+    def _get_words(self, texts: Iterable) -> List[str]:
+        words = []
+        if self.lowercase:
+            flattened_words = [text.lower().split() for text in texts]
+        else:
+            flattened_words = [text.split() for text in texts]
+        flattened_words = list(chain.from_iterable(flattened_words))
+        for word in flattened_words:
+            for char in self.chars:
+                word = word.replace(char, "")
+            if word not in words:
+                words.append(word)
+        return words
+
     @property
     def vocabulary(self) -> Dict[str, int]:
         return self._vocabulary
@@ -92,3 +89,15 @@ class CountVectorizer:
 
         if difference:
             self._vocabulary = updated_vocab
+
+
+if __name__ == "__main__":
+    vectorizer = CountVectorizer()
+    corpus = [
+        "Crock Pot Pasta Never boil pasta again",
+        "Pasta Pomodoro Fresh ingredients Parmesan to taste"
+        ]
+    count_matrix = vectorizer.fit_transform(corpus)
+    feature_names = vectorizer.get_feature_names()
+    print(f"Features: {feature_names}")
+    print(f"Count matrix: {count_matrix}")
