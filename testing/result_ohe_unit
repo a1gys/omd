@@ -1,0 +1,12 @@
+test_empty_input (testing.testing_ohe_unit.OheTest) ... ok
+test_mixed_input (testing.testing_ohe_unit.OheTest) ... ok
+test_multiple_repeated_strings (testing.testing_ohe_unit.OheTest) ... ok
+test_multiple_unique_strings (testing.testing_ohe_unit.OheTest) ... ok
+test_no_duplicates (testing.testing_ohe_unit.OheTest) ... ok
+test_single_string (testing.testing_ohe_unit.OheTest) ... ok
+test_with_duplicates (testing.testing_ohe_unit.OheTest) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+OK

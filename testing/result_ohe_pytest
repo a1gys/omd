@@ -1,0 +1,13 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.4, pytest-7.4.0, pluggy-1.0.0 -- C:\Users\baimy\miniconda3\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\baimy\Programming\avito_academy\python\omd
+plugins: cov-4.1.0
+collecting ... collected 4 items
+
+testing/testing_ohe_pytest.py::test_single_element PASSED                [ 25%]
+testing/testing_ohe_pytest.py::test_multiple_elements PASSED             [ 50%]
+testing/testing_ohe_pytest.py::test_empty_input PASSED                   [ 75%]
+testing/testing_ohe_pytest.py::test_non_string PASSED                    [100%]
+
+============================== 4 passed in 0.06s ==============================

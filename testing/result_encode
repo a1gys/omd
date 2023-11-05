@@ -1,0 +1,36 @@
+Trying:
+    encode("SOS")
+Expecting:
+    '... --- ...'
+ok
+Trying:
+    encode("HOW ARE YOU@")
+Expecting:
+    Traceback (most recent call last):
+        ...
+    KeyError: '@'
+ok
+Trying:
+    encode("GOOD BYE EVERYONE SEE YoU TOMORROW")
+Expecting:
+    Traceback (most recent call last):
+        ...
+    KeyError: 'o'
+ok
+Trying:
+    encode("TOO LONG SENTENCE TO BE FIT IN ONE LINE SO WE USE ELLIPSIS")         # doctest: +ELLIPSIS
+Expecting:
+    '- --- ---   ...   . .-.. .-.. .. .--. ... .. ...'
+ok
+Trying:
+    encode("TESTING  WHITESPACES   WITH FLAGS")
+Expecting:
+    '- . ... - .. -. --.     .-- .... .. - . ... .--. .- -.-. . ...            .-- .. - ....   ..-. .-.. .- --. ...'
+ok
+1 items had no tests:
+    testing_encode
+1 items passed all tests:
+   5 tests in testing_encode.encode
+5 tests in 2 items.
+5 passed and 0 failed.
+Test passed.
