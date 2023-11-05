@@ -1,0 +1,8 @@
+test_year_dmy (testing.testing_year_mock.TestWhatYear.test_year_dmy) ... ok
+test_year_invalid (testing.testing_year_mock.TestWhatYear.test_year_invalid) ... ok
+test_year_ymd (testing.testing_year_mock.TestWhatYear.test_year_ymd) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.014s
+
+OK
